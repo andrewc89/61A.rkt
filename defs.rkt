@@ -10,7 +10,10 @@
 (define (bf str)
   (substring str 1 (string-length str)))
 
+;; define word
+
+;; fix this
 (define (member? u lst)
-    (not (equal? (member u) #f)))
+    (not (equal? (member u lst) #f)))
 
 
