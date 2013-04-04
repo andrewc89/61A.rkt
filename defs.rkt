@@ -1,5 +1,11 @@
 #lang racket
 
+(define (square x)
+  (* x x))
+
+(define (cube x)
+  (* x x x))
+
 (define (butlast str)
   (substring str 0 (- (string-length str) 1)))
 (define (bl str)
@@ -45,5 +51,50 @@
           (iter (next a) (combiner result (term a)))))
       (iter a null-value))
  
+ (define (average x y)
+   (/ (+ x y) 2))
  
-
+ (define (make-rat n d)
+   (let ((g (gcd n d)))
+     (cons (/ n g) (/ d g))))
+ (define (numer x)
+   (car x))
+ (define (denom x)
+   (cdr x))
+ (define (add-rat a b)
+   (make-rat (+ (* (numer a) (denom b)) (* (numer b) (denom a)))
+             (* (denom a) (denom b)))) 
+ (define (sub-rat a b)
+   (make-rat (- (* (numer a) (denom b)) (* (numer b) (denom a)))
+             (* (denom a) (denom b))))
+ (define (mul-rat a b)
+   (make-rat (* (numer a) (numer b))
+             (* (denom a) (denom b))))
+ (define (div-rat a b)
+   (make-rat (* (numer a) (denom b))
+             (* (denom a) (numer b))))
+ (define (equal-rat? a b)
+   (= (* (numer a) (denom b))
+      (* (numer b) (denom a))))
+ (define (print-rat x)
+   (display (numer x))
+   (display "/")
+   (display (denom x)))
+ 
+ (define (reverse items)
+   (define (iter items result)
+     (if (null? items)
+         result
+         (iter (cdr items) (cons (car items) result))))
+   (iter items null)) 
+ (define (deep-reverse items)
+   (if (pair? items)
+       (reverse (map deep-reverse items))
+       items))
+ 
+(define (tree-map f tree)
+    (map (lambda (sub-tree)
+           (if (pair? sub-tree)
+               (tree-map f sub-tree)
+               (f sub-tree)))
+         tree))
